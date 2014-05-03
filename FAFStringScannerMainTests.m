@@ -43,7 +43,7 @@
 	FAFStringScanner* scanner = [[FAFStringScanner alloc] initWithString:@"(Happy days are here again)"];
 	
 	NSString* result = [scanner readBalanced];
-	STAssertEqualObjects(result, @"(Happy days are here again)", @"readRemainder returned wrong value");
+	STAssertEqualObjects(result, @"(Happy days are here again)", @"readBalanced returned wrong value");
 	
 	[scanner release];
 }
@@ -53,7 +53,7 @@
 	FAFStringScanner* scanner = [[FAFStringScanner alloc] initWithString:@"[Happy days are here again]"];
 	
 	NSString* result = [scanner readBalanced];
-	STAssertEqualObjects(result, @"[Happy days are here again]", @"readRemainder returned wrong value");
+	STAssertEqualObjects(result, @"[Happy days are here again]", @"readBalanced returned wrong value");
 	
 	[scanner release];
 }
@@ -63,7 +63,7 @@
 	FAFStringScanner* scanner = [[FAFStringScanner alloc] initWithString:@"{Happy days are here again}"];
 	
 	NSString* result = [scanner readBalanced];
-	STAssertEqualObjects(result, @"{Happy days are here again}", @"readRemainder returned wrong value");
+	STAssertEqualObjects(result, @"{Happy days are here again}", @"readBalanced returned wrong value");
 	
 	[scanner release];
 }
@@ -73,7 +73,7 @@
 	FAFStringScanner* scanner = [[FAFStringScanner alloc] initWithString:@"\"Happy days are here again\""];
 	
 	NSString* result = [scanner readBalanced];
-	STAssertEqualObjects(result, @"\"Happy days are here again\"", @"readRemainder returned wrong value");
+	STAssertEqualObjects(result, @"\"Happy days are here again\"", @"readBalanced returned wrong value");
 	
 	[scanner release];
 }
@@ -83,7 +83,44 @@
 	FAFStringScanner* scanner = [[FAFStringScanner alloc] initWithString:@"{([\"Happy {days are here again\"[)}"];
 	
 	NSString* result = [scanner readBalanced];
-	STAssertEqualObjects(result, @"{([\"Happy {days are here again\"[)}", @"readRemainder returned wrong value");
+	STAssertEqualObjects(result, @"{([\"Happy {days are here again\"[)}", @"readBalanced returned wrong value");
+	
+	[scanner release];
+}
+
+- (void) test_isAtEnd
+{
+	FAFStringScanner* scanner = [[FAFStringScanner alloc] initWithString:@"Happy days are here again"];
+	
+	[scanner readToken];
+	[scanner readToken];
+	[scanner readToken];
+	[scanner readToken];
+	STAssertFalse([scanner isAtEnd], nil);
+	[scanner readToken];
+	STAssertTrue([scanner isAtEnd], nil);
+	
+	[scanner release];
+}
+
+- (void) test_advance
+{
+	FAFStringScanner* scanner = [[FAFStringScanner alloc] initWithString:@"Happy days are here again."];
+	
+	int loc = [scanner scanLocation];
+	[scanner advance:1];
+	STAssertTrue( ([scanner scanLocation] == loc + 1) , @"Scanner did not advance by 1");
+	
+	loc = [scanner scanLocation];
+	[scanner advance:24];
+	STAssertTrue( ([scanner scanLocation] == loc + 24) , @"Scanner did not advance by 24");
+	
+	loc = [scanner scanLocation];
+	[scanner advance:20];
+	STAssertTrue( ([scanner scanLocation] == loc) , @"Scanner errored on advance overflow.");
+	
+	[scanner advance: -26];
+	STAssertTrue( ([scanner scanLocation] == 0) , @"Scanner errored on advance underflow.");
 	
 	[scanner release];
 }

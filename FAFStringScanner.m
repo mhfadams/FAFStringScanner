@@ -15,17 +15,24 @@
 - (id) initWithString:(NSString*)input {
 	self = [super init];
 	if (self != nil) {
-		_string = [[input stringByAppendingString:@"  "] copy];
-		// trailing spaces (2) makes a lot of things easier
+		_string = [input retain];
 		//NSLog(_string);
 		_scanLoc = 0;
 		_maxLoc = [_string length] - 1;
 		_lastFind = NSMakeRange(0,0);
-		alphaNums = [@"a b c d e f g h i j k l m n o p q r s t u v w x y z A B C D E F G H I J K L M N O P Q R S T U V W X Y Z 0 1 2 3 4 5 6 7 8 9 _ @" componentsSeparatedByString:@" "];
-		whiteSpaces = [@" ,\t,\n" componentsSeparatedByString:@","];
+		alphaNums = [[@"a b c d e f g h i j k l m n o p q r s t u v w x y z A B C D E F G H I J K L M N O P Q R S T U V W X Y Z 0 1 2 3 4 5 6 7 8 9 _ @" componentsSeparatedByString:@" "] retain];
+		whiteSpaces = [[@" ,\t,\n" componentsSeparatedByString:@","] retain];
 	}
 	return self;
 }
+
+- (void) dealloc {
+	[_string release];
+	[alphaNums release];
+	[whiteSpaces release];
+	[super dealloc];
+}
+
 
 - (int) scanLocation {
 	return _scanLoc;
@@ -34,16 +41,23 @@
 	_scanLoc = loc;
 }
 
-- (void) advance:(int) count {
+- (void) advance:(int) count
+{
 	_scanLoc = _scanLoc + count;
-	if (_scanLoc > _maxLoc) {
+	if (_scanLoc > _maxLoc)
+	{
 		_scanLoc = _maxLoc;
 	}
-
+	if (_scanLoc < 0)
+	{
+		_scanLoc = 0;
+	}
+	
 }
 
 
-- (BOOL) isAtEnd {
+- (BOOL) isAtEnd
+{
 	if (_scanLoc >= _maxLoc) return YES;
 	return NO;
 }
@@ -329,13 +343,6 @@
 	return output;
 }
 
-
-- (void) dealloc {
-	[_string release];
-	[alphaNums release];
-	[whiteSpaces release];
-	[super dealloc];
-}
 
 
 @end
