@@ -142,7 +142,8 @@
 
 
 
-- (NSString*) readRemainder {
+- (NSString*) readRemainder
+{
 	
 	_lastFind = NSMakeRange(_scanLoc, (_maxLoc - _scanLoc + 1));
 	return [_string substringWithRange:_lastFind];
@@ -150,12 +151,6 @@
 
 
 - (NSString*) prevCharacter {
-	if ((_scanLoc - 2) < 0) return nil;
-	_lastFind = NSMakeRange((_scanLoc - 2), 1);
-	return [_string substringWithRange:_lastFind];
-}
-
-- (NSString*) currentCharacter {
 	if ((_scanLoc - 1) < 0) return nil;
 	_lastFind = NSMakeRange((_scanLoc - 1), 1);
 	return [_string substringWithRange:_lastFind];
@@ -168,7 +163,6 @@
 }
 
 - (NSString*) readCharacter {
-	//if ([self isAtEnd]) return nil;
 	if (_scanLoc > _maxLoc) return nil;
 	_lastFind = NSMakeRange(_scanLoc, 1);
 	[self advance:1];
@@ -278,13 +272,17 @@
 			}
 		}
 	}
-	if ( ! [self isAtEnd] ) {
-		[self advance: -1]; // compensate for above readCharacter;
-	} else {
-		//[scanText appendString:[self readCharacter]];
-
-	//	return currentChar;
+	if ( [self isAtEnd] )
+	{
+		[scanText appendString:currentChar];
+		currentChar = [self readCharacter];
+		if ([alphaNums containsObject:currentChar]) {
+			[scanText appendString:currentChar];
+		}
+		return scanText;
 	}
+	
+	
 	if ([scanText isEqual:@""]) return nil;
 	return scanText;
 }

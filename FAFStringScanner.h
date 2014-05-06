@@ -30,7 +30,7 @@
 - (void) advance:(int) count;
 
 /*!
-\brief	Returns YES if there are no more characters remaining to be scanned.
+\brief	Returns YES if the cursor is on last character.
  */
 - (BOOL) isAtEnd;
 
@@ -48,9 +48,19 @@
  */
 - (NSString*) readRemainder;
 
+/*!
+\brief	returns the previous character, without moving.
+ */
 - (NSString*) prevCharacter;
-- (NSString*) currentCharacter;
+
+/*!
+\brief	returns the current character, without advancing.
+ */
 - (NSString*) nextCharacter;
+
+/*!
+\brief	returns the current character, and advances by 1.
+ */
 - (NSString*) readCharacter;
 
 /*!
@@ -64,7 +74,12 @@
 - (NSString*) readBalanced;
 
 - (NSString*) nextToken;
+
+/*!
+\brief	returns the next token, and advances the cursor to after the token.
+ */
 - (NSString*) readToken;
+
 - (NSArray*) readTokensBalanced;
 
 
