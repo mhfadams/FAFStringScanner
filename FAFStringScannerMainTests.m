@@ -94,7 +94,9 @@
 	
 	[scanner advance:6];
 	STAssertFalse([scanner isAtEnd], nil);
-	[scanner advance:20];
+	[scanner advance:18];
+	STAssertFalse([scanner isAtEnd], nil);
+	[scanner advance:2];
 	STAssertTrue([scanner isAtEnd], [scanner readCharacter]);
 	
 	[scanner release];
@@ -112,11 +114,11 @@
 	[scanner advance:24];
 	STAssertTrue( ([scanner scanLocation] == loc + 24) , @"Scanner did not advance by 24");
 	
-	loc = [scanner scanLocation];
-	[scanner advance:20];
-	STAssertTrue( ([scanner scanLocation] == loc) , @"Scanner errored on advance overflow.");
+	//loc = [scanner scanLocation];
+	//[scanner advance:20];
+	//STAssertTrue( ([scanner scanLocation] == loc) , @"Scanner errored on advance overflow.");
 	
-	[scanner advance: -26];
+	[scanner advance: -50];
 	STAssertTrue( ([scanner scanLocation] == 0) , @"Scanner errored on advance underflow.");
 	
 	[scanner release];
@@ -134,6 +136,8 @@
 	[scanner advance:18];
 	STAssertEqualObjects( [scanner readCharacter] , @"." , @"Scanner failed at end of string.");
 	
+	NSString* result = [scanner readCharacter];
+	STAssertNil( result , @"Scanner failed to return nil after end of string (%@).", result);
 	
 	[scanner release];
 }
@@ -164,24 +168,8 @@
 	[scanner advance:7];
 	STAssertEqualObjects( [scanner prevCharacter] , @"a" , @"Scanner failed in middle of string.");
 	
-	[scanner advance:20]; // we cant advance beyond end of string
-	STAssertEqualObjects( [scanner prevCharacter] , @"n" , @"Scanner failed at end of string.");
-	
-	
-	[scanner release];
-}
-
-- (void) test_readToken_nonTokenEnding
-{
-	FAFStringScanner* scanner = [[FAFStringScanner alloc] initWithString:@"Happy days are here again."];
-	
-	STAssertEqualObjects( [scanner readToken] , @"Happy" , @"Scanner failed at beginning of string.");
-	
-	STAssertEqualObjects( [scanner readToken] , @"days" , @"Scanner failed in middle of string.");
-	
-	[scanner readToken];
-	[scanner readToken];
-	STAssertEqualObjects( [scanner readToken] , @"again" , @"Scanner failed at end of string.");
+	//[scanner advance:20];
+	//STAssertEqualObjects( [scanner prevCharacter] , @"n" , @"Scanner failed at end of string.");
 	
 	
 	[scanner release];
@@ -199,9 +187,61 @@
 	[scanner readToken];
 	STAssertEqualObjects( [scanner readToken] , @"again" , @"Scanner failed at end of string.");
 	
+	STAssertNil( [scanner readToken] , @"Failed to return nil at end of string.");
 	
 	[scanner release];
 }
+
+- (void) test_nextToken_tokenEnding
+{
+	FAFStringScanner* scanner = [[FAFStringScanner alloc] initWithString:@"Happy days are here again"];
+	
+	STAssertEqualObjects( [scanner nextToken] , @"Happy" , @"Scanner failed at beginning of string.");
+	
+	[scanner advance:5];
+	STAssertEqualObjects( [scanner nextToken] , @"days" , @"Scanner failed in middle of string.");
+	
+	[scanner advance:14];
+	STAssertEqualObjects( [scanner nextToken] , @"again" , @"Scanner failed at end of string.");
+	
+	
+	[scanner release];
+}
+
+- (void) test_readToken_mixed_types
+{
+	FAFStringScanner* scanner = [[FAFStringScanner alloc] initWithString:@"Happy days; are +here again"];
+	
+	STAssertEqualObjects( [scanner readToken] , @"Happy" , nil);
+	
+	STAssertEqualObjects( [scanner readToken] , @"days" , nil);
+	
+	STAssertEqualObjects( [scanner readToken] , @";" , nil);
+	
+	STAssertEqualObjects( [scanner readToken] , @"are" , nil);
+	
+	STAssertEqualObjects( [scanner readToken] , @"+" , nil);
+	
+	STAssertEqualObjects( [scanner readToken] , @"here" , nil);
+	
+	[scanner release];
+}
+
+
+
+- (void) test_readUntilString
+{
+	FAFStringScanner* scanner = [[FAFStringScanner alloc] initWithString:@"Happy days are here again."];
+	
+	STAssertEqualObjects( [scanner readUntilString:@"days"] , @"Happy " , @"Scanner failed at beginning of string.");
+	
+	STAssertEqualObjects( [scanner readUntilString:@"asdasdasd"] , @"Happy days are here again." , @"Scanner failed at end of string.");
+	
+	[scanner release];
+}
+
+
+
 
 
 

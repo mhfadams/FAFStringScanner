@@ -8,7 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface FAFStringScanner : NSObject {
+@interface FAFStringScanner : NSObject
+{
 	NSString*	_string;
 	int			_scanLoc;
 	int			_maxLoc;
@@ -30,7 +31,7 @@
 - (void) advance:(int) count;
 
 /*!
-\brief	Returns YES if the cursor is on last character.
+\brief	Returns YES if the cursor is past the last character.
  */
 - (BOOL) isAtEnd;
 
@@ -73,6 +74,9 @@
  */
 - (NSString*) readBalanced;
 
+/*!
+\brief	returns the next token, without advancing the cursor.
+ */
 - (NSString*) nextToken;
 
 /*!

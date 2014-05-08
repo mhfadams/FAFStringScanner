@@ -46,7 +46,7 @@
 	_scanLoc = _scanLoc + count;
 	if (_scanLoc > _maxLoc)
 	{
-		_scanLoc = _maxLoc;
+		//_scanLoc = _maxLoc;
 	}
 	if (_scanLoc < 0)
 	{
@@ -58,13 +58,14 @@
 
 - (BOOL) isAtEnd
 {
-	if (_scanLoc >= _maxLoc) return YES;
+	if (_scanLoc > _maxLoc) return YES;
 	return NO;
 }
 
 
 
-- (NSString*) readUntilString:(NSString*)findString {
+- (NSString*) readUntilString:(NSString*)findString
+{
 	NSString* temp;
 	return [self readUntilStrings:[NSArray arrayWithObject:findString] matchString:&temp];
 }
@@ -251,38 +252,65 @@
 }
 
 
-- (NSString*) readToken {
+- (NSString*) readToken
+{
+	int AlphaNumTokenType = 0;
+	int OtherTokenType = 1;
+	int tokenType = -1;
+	
+	
+	/*
+	 get token
+	identify character type
+	accumulate tokens until character type changes
+	 return
+	 */
 	
 	NSMutableString* scanText = [NSMutableString stringWithString:@""];
 	BOOL started = NO;
-	//BOOL finished = NO;
 	NSString* currentChar = nil;
-	while ((currentChar = [self readCharacter]) && (! [self isAtEnd])) {
-		//NSLog(@"currentChar: %@", currentChar);
-		if ([alphaNums containsObject:currentChar]) {
-			[scanText appendString:currentChar];
-			started = YES;
-		} else if([whiteSpaces containsObject:currentChar]) {
-			if (started) break;
-		} else {
-			if (started) {
+	while ((currentChar = [self readCharacter]))
+	{
+		if ([alphaNums containsObject:currentChar])
+		{
+			if (! started)
+			{
+				tokenType = AlphaNumTokenType;
+				started = YES;
+			}
+			if (tokenType == AlphaNumTokenType)
+				[scanText appendString:currentChar];
+			else
+			{			
+				[self advance:-1];
 				break;
-			} else {
-				return currentChar;
+			}
+			
+		}
+		else if ( ! [whiteSpaces containsObject:currentChar])
+		{
+			if (! started)
+			{
+				tokenType = OtherTokenType;
+				started = YES;
+			}
+			if (tokenType == OtherTokenType)
+				[scanText appendString:currentChar];
+			else
+			{			
+				[self advance:-1];
+				break;
 			}
 		}
-	}
-	if ( [self isAtEnd] )
-	{
-		[scanText appendString:currentChar];
-		currentChar = [self readCharacter];
-		if ([alphaNums containsObject:currentChar]) {
-			[scanText appendString:currentChar];
+		else
+		{
+			//tokenType = -1;
+			if (started) break;
 		}
-		return scanText;
+						
+
 	}
-	
-	
+
 	if ([scanText isEqual:@""]) return nil;
 	return scanText;
 }
