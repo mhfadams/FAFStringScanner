@@ -14,9 +14,11 @@
 	int			_scanLoc;
 	int			_maxLoc;
 	NSRange		_lastFind;
+	
+	BOOL		shouldTokenizeQuotedStrings;
 
-	NSArray*			alphaNums;
-	NSArray*			whiteSpaces;
+	NSArray*	alphaNums;
+	NSArray*	whiteSpaces;
 }
 
 
@@ -45,9 +47,12 @@
 - (NSString*) readUntilStringsAdvancingPast:(NSArray*)findStrings matchString:(NSString* *)string;
 
 /*!
-\brief	Returns a string equal tot he span from the current posisiton to the end of the input string.
+\brief	Returns a string equal to the span from the current posisiton to the end of the input string.
  */
 - (NSString*) readRemainder;
+
+- (NSArray*) readRemainingTokens;
+
 
 /*!
 \brief	returns the previous character, without moving.
@@ -73,6 +78,8 @@
  Nested quotes are not supported.
  */
 - (NSString*) readBalanced;
+
+- (void) setShouldTokenizeQuotedStrings: (BOOL) flag;
 
 /*!
 \brief	returns the next token, without advancing the cursor.

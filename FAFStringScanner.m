@@ -20,6 +20,7 @@
 		_scanLoc = 0;
 		_maxLoc = [_string length] - 1;
 		_lastFind = NSMakeRange(0,0);
+		shouldTokenizeQuotedStrings = NO;
 		alphaNums = [[@"a b c d e f g h i j k l m n o p q r s t u v w x y z A B C D E F G H I J K L M N O P Q R S T U V W X Y Z 0 1 2 3 4 5 6 7 8 9 _ @" componentsSeparatedByString:@" "] retain];
 		whiteSpaces = [[@" ,\t,\n" componentsSeparatedByString:@","] retain];
 	}
@@ -40,6 +41,13 @@
 - (void) setScanLocation:(int)loc {
 	_scanLoc = loc;
 }
+
+- (void) setShouldTokenizeQuotedStrings: (BOOL) flag
+{
+	shouldTokenizeQuotedStrings = flag;
+}
+
+
 
 - (void) advance:(int) count
 {
@@ -150,20 +158,32 @@
 	return [_string substringWithRange:_lastFind];
 }
 
+- (NSArray*) readRemainingTokens
+{
+	NSMutableArray* output = [NSMutableArray new];
+	NSString* token = nil;
+	while ( token = [self readToken]) {
+		[output addObject:token];
+	}
+	return output;
+}
 
-- (NSString*) prevCharacter {
+- (NSString*) prevCharacter
+{
 	if ((_scanLoc - 1) < 0) return nil;
 	_lastFind = NSMakeRange((_scanLoc - 1), 1);
 	return [_string substringWithRange:_lastFind];
 }
 
-- (NSString*) nextCharacter {
+- (NSString*) nextCharacter
+{
 	if (_scanLoc > _maxLoc) return nil;
 	_lastFind = NSMakeRange(_scanLoc, 1);
 	return [_string substringWithRange:_lastFind];
 }
 
-- (NSString*) readCharacter {
+- (NSString*) readCharacter
+{
 	if (_scanLoc > _maxLoc) return nil;
 	_lastFind = NSMakeRange(_scanLoc, 1);
 	[self advance:1];
@@ -171,7 +191,8 @@
 }
 
 
-- (NSString*) readBalanced {
+- (NSString*) readBalanced
+{
 	//[self advance: -1];
 	NSMutableArray* chars = [NSMutableArray new];
 	int parenCount = 0;
@@ -244,6 +265,8 @@
 	return [chars componentsJoinedByString:@""];
 }
 
+
+
 - (NSString*) nextToken {
 	int startLoc = _scanLoc;
 	NSString* token = [self readToken];
@@ -295,7 +318,10 @@
 				started = YES;
 			}
 			if (tokenType == OtherTokenType)
+			{
 				[scanText appendString:currentChar];
+				break;
+			}
 			else
 			{			
 				[self advance:-1];
@@ -310,7 +336,13 @@
 						
 
 	}
-
+	
+	if (shouldTokenizeQuotedStrings && [scanText isEqual: @"\""])
+	{
+		[self advance:-1];
+		return [self readBalanced];
+	}
+	
 	if ([scanText isEqual:@""]) return nil;
 	return scanText;
 }
