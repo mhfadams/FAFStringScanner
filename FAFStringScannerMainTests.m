@@ -78,7 +78,18 @@
 	[scanner release];
 }
 
-- (void) test_readBalanced_all
+- (void) test_readBalanced_quote_with_escapes
+{
+	NSString* input = @"\"Happy days \\\"are\\\" here again\"";
+	FAFStringScanner* scanner = [[FAFStringScanner alloc] initWithString:input];
+	
+	NSString* result = [scanner readBalanced];
+	STAssertEqualObjects(result, input, @"readBalanced could not handle escaped quote.");
+	
+	[scanner release];
+}
+
+- (void) test_readBalanced_mixed
 {
 	FAFStringScanner* scanner = [[FAFStringScanner alloc] initWithString:@"{([\"Happy {days are here again\"[)}"];
 	

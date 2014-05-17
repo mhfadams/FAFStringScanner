@@ -79,6 +79,9 @@
  */
 - (NSString*) readBalanced;
 
+/*!
+\brief	if YES when reading tokens, then if next token is a quote, will read balanced instead. Defaults to YES.
+ */
 - (void) setShouldTokenizeQuotedStrings: (BOOL) flag;
 
 /*!

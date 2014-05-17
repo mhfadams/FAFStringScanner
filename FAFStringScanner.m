@@ -20,7 +20,7 @@
 		_scanLoc = 0;
 		_maxLoc = [_string length] - 1;
 		_lastFind = NSMakeRange(0,0);
-		shouldTokenizeQuotedStrings = NO;
+		shouldTokenizeQuotedStrings = YES;
 		alphaNums = [[@"a b c d e f g h i j k l m n o p q r s t u v w x y z A B C D E F G H I J K L M N O P Q R S T U V W X Y Z 0 1 2 3 4 5 6 7 8 9 _ @" componentsSeparatedByString:@" "] retain];
 		whiteSpaces = [[@" ,\t,\n" componentsSeparatedByString:@","] retain];
 	}
@@ -215,14 +215,16 @@
 	//NSLog(@"targetChar: %@", targetChar);
 	
 	NSString* currentChar;
+	NSString* prevCharacter;
 	while (currentChar = [self readCharacter]) {
 		[chars addObject:currentChar];
 		//NSLog(currentChar);
-		//NSLog(@"prevChar: %@", [self prevCharacter]);
+		//NSLog(@"prevChar: %@", prevCharacter);
 		//NSLog(@"inQuote: %i", inQuote);
 		if (inQuote) {
 			// ignore prens, brackets and braces
-			if ([currentChar isEqual: @"\""] && (![[self prevCharacter] isEqual: @"\\"])) {
+			if ([currentChar isEqual: @"\""] && (![prevCharacter isEqual: @"\\"]))
+			{
 				// reached end of quote
 				inQuote = NO;
 				if ([currentChar isEqual: targetChar]) {
@@ -260,6 +262,7 @@
 			}
 
 		}
+		prevCharacter = [currentChar copy];
 	}
 	
 	return [chars componentsJoinedByString:@""];
