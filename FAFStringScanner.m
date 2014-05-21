@@ -404,6 +404,15 @@
 	return output;
 }
 
+- (unsigned) lineCount
+{
+	NSString *string = [_string substringToIndex:[self scanLocation]];
+	unsigned numberOfLines, index, stringLength = [string length];
+	for (index = 0, numberOfLines = 0; index < stringLength; numberOfLines++)
+		index = NSMaxRange([string lineRangeForRange:NSMakeRange(index, 0)]);
+	return numberOfLines;
+}
+
 
 
 @end

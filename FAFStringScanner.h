@@ -96,5 +96,6 @@
 
 - (NSArray*) readTokensBalanced;
 
+- (unsigned) lineCount;
 
 @end

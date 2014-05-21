@@ -16,8 +16,6 @@
 
 - (NSString*) readToken;
 
-- (int) currentLineCount;
-
 + (int) linesCountInArray: (NSArray*) array toIndex: (int) i;
 
 @end

@@ -200,6 +200,23 @@
 }
 
 
+- (void) test_lineCounting
+{
+	FAFStringScanner* scanner = [[FAFStringScanner alloc] initWithString:@"Happy days are here again.\nBut there are yet more days to come.\nHowever, this should be the last line."];
+	
+	[scanner readUntilStringAdvancingTo:@"again."];
+	STAssertTrue([scanner lineCount] == 1, @"Scanner failed at beginning of string.");
+	
+	[scanner readUntilStringAdvancingTo:@"days to come."];
+	STAssertTrue([scanner lineCount] == 2 , @"Scanner failed in middle of string.");
+	
+	[scanner readUntilStringAdvancingTo:@"last line."];
+	STAssertTrue([scanner lineCount] == 3 , @"Scanner failed at end of string.");
+	
+	[scanner release];
+}
+
+
 
 
 

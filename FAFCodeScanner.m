@@ -34,14 +34,6 @@
 	return token;
 }
 
-- (int) currentLineCount {
-	NSString *string = [_string substringToIndex:[self scanLocation]];
-	unsigned numberOfLines, index, stringLength = [string length];
-	for (index = 0, numberOfLines = 0; index < stringLength; numberOfLines++)
-		index = NSMaxRange([string lineRangeForRange:NSMakeRange(index, 0)]);
-	return numberOfLines;
-}
-
 + (int) linesCountInArray: (NSArray*) array toIndex: (int) i {
 	int count = 0;
 	NSEnumerator* e = [array objectEnumerator];
