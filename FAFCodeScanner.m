@@ -11,6 +11,19 @@
 
 @implementation FAFCodeScanner
 
+- (id) initWithString:(NSString*)input
+{
+	self = [super initWithString:input];
+	if (self != nil) {
+		[alphaNums autorelease];
+		alphaNums = [alphaNums arrayByAddingObject:@"@"];
+		alphaNums = [alphaNums arrayByAddingObject:@"#"];
+		[alphaNums retain];
+	}
+	return self;
+}
+
+
 - (NSString*) readToken {
 	NSString* token = [super readToken];
 	

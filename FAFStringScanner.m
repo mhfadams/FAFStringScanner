@@ -8,7 +8,8 @@
 
 #import "FAFStringScanner.h"
 
-
+#ifndef FAFSTRINGSCANNER_IMPLEMENTATION
+#define FAFSTRINGSCANNER_IMPLEMENTATION
 @implementation FAFStringScanner
 
 
@@ -21,7 +22,7 @@
 		_maxLoc = [_string length] - 1;
 		_lastFind = NSMakeRange(0,0);
 		shouldTokenizeQuotedStrings = YES;
-		alphaNums = [[@"a b c d e f g h i j k l m n o p q r s t u v w x y z A B C D E F G H I J K L M N O P Q R S T U V W X Y Z 0 1 2 3 4 5 6 7 8 9 _ @" componentsSeparatedByString:@" "] retain];
+		alphaNums = [[@"a b c d e f g h i j k l m n o p q r s t u v w x y z A B C D E F G H I J K L M N O P Q R S T U V W X Y Z 0 1 2 3 4 5 6 7 8 9 _" componentsSeparatedByString:@" "] retain];
 		whiteSpaces = [[@" ,\t,\n" componentsSeparatedByString:@","] retain];
 	}
 	return self;
@@ -414,5 +415,25 @@
 }
 
 
++ (NSString*) unescapeString:(NSString*) string
+{
+	
+	
+	FAFStringScanner* scanner = [[FAFStringScanner alloc] initWithString:string];
+	NSString* result = @"";
+	while ( (result = [result stringByAppendingString:[scanner readUntilStringAdvancingPast:@"\\"]])
+		   && ( ! [scanner isAtEnd]))
+	{
+		result = [result stringByAppendingString:[scanner readCharacter]];
+		result = [result stringByAppendingString:[scanner readUntilStringAdvancingPast:@"\\"]];
+	}
+	
+
+	return result;
+}
+
+
 
 @end
+
+#endif

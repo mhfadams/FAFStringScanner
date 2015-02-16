@@ -89,6 +89,15 @@
 	[scanner release];
 }
 
+- (void) test_unescape_quotes
+{
+	NSString* input = @"Happy days \\\"are\\\" here again";
+	
+	NSString* result = [FAFStringScanner unescapeString:input];
+	STAssertEqualObjects(result, @"Happy days \"are\" here again", @"unescapeString could not handle escaped quote.");
+	
+}
+
 - (void) test_readBalanced_mixed
 {
 	FAFStringScanner* scanner = [[FAFStringScanner alloc] initWithString:@"{([\"Happy {days are here again\"[)}"];

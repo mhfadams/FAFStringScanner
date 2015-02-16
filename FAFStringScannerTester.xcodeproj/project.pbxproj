@@ -12,6 +12,10 @@
 		4A3DC6EE191269E000FC4317 /* FAFStringScannerTester.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FB7796FE84155DC02AAC07 /* FAFStringScannerTester.m */; };
 		4A9ACDC61912EFFA000568C6 /* FAFStringScannerMainTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3DC6371912666300FC4317 /* FAFStringScannerMainTests.m */; };
 		4A9ACDED19130984000568C6 /* FAFStringScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A3DC623191265F800FC4317 /* FAFStringScanner.m */; };
+		4AADFE91191C5FB200115B77 /* FAFCodeScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AADFE8F191C5FB200115B77 /* FAFCodeScanner.m */; };
+		4AADFE92191C5FB200115B77 /* FAFCodeScanner.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4AADFE90191C5FB200115B77 /* FAFCodeScanner.h */; };
+		4AADFE97191C612800115B77 /* FAFStringScannerTokenTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AADFE95191C612800115B77 /* FAFStringScannerTokenTests.m */; };
+		4AADFED7191C6C5800115B77 /* FAFCodeScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AADFE8F191C5FB200115B77 /* FAFCodeScanner.m */; };
 		8DD76F9C0486AA7600D96B5E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB779EFE84155DC02AAC07 /* Foundation.framework */; };
 		8DD76F9F0486AA7600D96B5E /* FAFStringScannerTester.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = C6859EA3029092ED04C91782 /* FAFStringScannerTester.1 */; };
 /* End PBXBuildFile section */
@@ -35,6 +39,7 @@
 			files = (
 				8DD76F9F0486AA7600D96B5E /* FAFStringScannerTester.1 in CopyFiles */,
 				4A3DC626191265F800FC4317 /* FAFStringScanner.h in CopyFiles */,
+				4AADFE92191C5FB200115B77 /* FAFCodeScanner.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 		};
@@ -46,11 +51,15 @@
 		32A70AAB03705E1F00C91783 /* FAFStringScannerTester_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FAFStringScannerTester_Prefix.pch; sourceTree = "<group>"; };
 		4A3DC623191265F800FC4317 /* FAFStringScanner.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = FAFStringScanner.m; sourceTree = "<group>"; };
 		4A3DC624191265F800FC4317 /* FAFStringScanner.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FAFStringScanner.h; sourceTree = "<group>"; };
-		4A3DC62E1912661100FC4317 /* FAFStringScannerTestUnit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "FAFStringScannerTestUnit-Info.plist"; sourceTree = "<group>"; };
+		4A3DC62E1912661100FC4317 /* FAFStringScannerTestUnit-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FAFStringScannerTestUnit-Info.plist"; sourceTree = "<group>"; };
 		4A3DC6361912666300FC4317 /* FAFStringScannerMainTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FAFStringScannerMainTests.h; sourceTree = "<group>"; };
 		4A3DC6371912666300FC4317 /* FAFStringScannerMainTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FAFStringScannerMainTests.m; sourceTree = "<group>"; };
 		4A3DC63E191266D000FC4317 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = /System/Library/Frameworks/SenTestingKit.framework; sourceTree = "<absolute>"; };
 		4A9ACDC31912EFEE000568C6 /* FAFStringScannerTestUnit.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FAFStringScannerTestUnit.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4AADFE8F191C5FB200115B77 /* FAFCodeScanner.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = FAFCodeScanner.m; sourceTree = "<group>"; };
+		4AADFE90191C5FB200115B77 /* FAFCodeScanner.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FAFCodeScanner.h; sourceTree = "<group>"; };
+		4AADFE95191C612800115B77 /* FAFStringScannerTokenTests.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = FAFStringScannerTokenTests.m; sourceTree = "<group>"; };
+		4AADFE96191C612800115B77 /* FAFStringScannerTokenTests.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FAFStringScannerTokenTests.h; sourceTree = "<group>"; };
 		8DD76FA10486AA7600D96B5E /* FAFStringScannerTester */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = FAFStringScannerTester; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6859EA3029092ED04C91782 /* FAFStringScannerTester.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = FAFStringScannerTester.1; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -93,6 +102,8 @@
 			children = (
 				4A3DC624191265F800FC4317 /* FAFStringScanner.h */,
 				4A3DC623191265F800FC4317 /* FAFStringScanner.m */,
+				4AADFE90191C5FB200115B77 /* FAFCodeScanner.h */,
+				4AADFE8F191C5FB200115B77 /* FAFCodeScanner.m */,
 				32A70AAB03705E1F00C91783 /* FAFStringScannerTester_Prefix.pch */,
 				08FB7796FE84155DC02AAC07 /* FAFStringScannerTester.m */,
 			);
@@ -119,6 +130,8 @@
 		4A3DC6351912663C00FC4317 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				4AADFE96191C612800115B77 /* FAFStringScannerTokenTests.h */,
+				4AADFE95191C612800115B77 /* FAFStringScannerTokenTests.m */,
 				4A3DC6361912666300FC4317 /* FAFStringScannerMainTests.h */,
 				4A3DC6371912666300FC4317 /* FAFStringScannerMainTests.m */,
 			);
@@ -179,9 +192,11 @@
 		08FB7793FE84155DC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = 1DEB927808733DD40010E9CD /* Build configuration list for PBXProject "FAFStringScannerTester" */;
+			compatibilityVersion = "Xcode 2.4";
 			hasScannedForEncodings = 1;
 			mainGroup = 08FB7794FE84155DC02AAC07 /* FAFStringScannerTester */;
 			projectDirPath = "";
+			projectRoot = "";
 			targets = (
 				8DD76F960486AA7600D96B5E /* FAFStringScannerTester */,
 				4A9ACDC21912EFEE000568C6 /* FAFStringScannerTestUnit */,
@@ -220,8 +235,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AADFED7191C6C5800115B77 /* FAFCodeScanner.m in Sources */,
 				4A9ACDC61912EFFA000568C6 /* FAFStringScannerMainTests.m in Sources */,
 				4A9ACDED19130984000568C6 /* FAFStringScanner.m in Sources */,
+				4AADFE97191C612800115B77 /* FAFStringScannerTokenTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -231,6 +248,7 @@
 			files = (
 				4A3DC6EE191269E000FC4317 /* FAFStringScannerTester.m in Sources */,
 				4A3DC625191265F800FC4317 /* FAFStringScanner.m in Sources */,
+				4AADFE91191C5FB200115B77 /* FAFCodeScanner.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -17,7 +17,7 @@
 	
 	BOOL		shouldTokenizeQuotedStrings;
 
-	NSArray*	alphaNums;
+	NSArray*	alphaNums; // also contains @ and _
 	NSArray*	whiteSpaces;
 }
 
@@ -97,5 +97,11 @@
 - (NSArray*) readTokensBalanced;
 
 - (unsigned) lineCount;
+
+/*!
+ \brief	replaces all occurrances of excaped characters with actual characters.
+ 
+ */
++ (NSString*) unescapeString:(NSString*) string;
 
 @end

@@ -7,14 +7,6 @@ int main (int argc, const char * argv[]) {
     // insert code here...
     NSLog(@"Hello, World!");
 	
-	FAFStringScanner* scanner = [[FAFStringScanner alloc] initWithString:@"HEllo"];
-	
-	
-	
-    NSLog([scanner readRemainder]);
-	
-	
-	[scanner release];
 	
 	
     [pool drain];
