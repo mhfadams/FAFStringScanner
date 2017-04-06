@@ -46,6 +46,8 @@
 - (NSString*) readUntilStringsAdvancingTo:(NSArray*)findStrings matchString:(NSString* *)string;
 - (NSString*) readUntilStringsAdvancingPast:(NSArray*)findStrings matchString:(NSString* *)string;
 
+- (NSString*) readForLengthAdvancing: (NSUInteger) length; 
+
 /*!
 \brief	Returns a string equal to the span from the current posisiton to the end of the input string.
  */

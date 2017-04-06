@@ -205,6 +205,24 @@
 	
 	STAssertEqualObjects( [scanner readUntilString:@"asdasdasd"] , @"Happy days are here again." , @"Scanner failed at end of string.");
 	
+	STAssertEqualObjects( [scanner readUntilString:@"Happy"] , @"" , @"Scanner failed to return empty string.");
+	
+	STAssertEqualObjects( [scanner readUntilString:@"ys"] , @"Happy da" , @"Scanner returned too soon.");
+	
+	[scanner release];
+}
+
+- (void) test_readUntilStringAdvancingPast
+{
+	FAFStringScanner* scanner = [[FAFStringScanner alloc] initWithString:@"Happy days are\n here\n\nagain."];
+	
+	STAssertEqualObjects( [scanner readUntilStringAdvancingPast:@"days"] , @"Happy " , @"Scanner failed.");
+	
+	STAssertEqualObjects( [scanner readUntilStringAdvancingPast:@"\n"] , @" are" , @"Scanner failed given on newline.");
+	
+	STAssertEqualObjects( [scanner readUntilStringAdvancingPast:@"\n"] , @" here" , @"Scanner stopped at second match.");
+	
+	
 	[scanner release];
 }
 

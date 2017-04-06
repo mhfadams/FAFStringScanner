@@ -150,6 +150,13 @@
 	return result;
 }
 
+- (NSString*) readForLengthAdvancing: (NSUInteger) length
+{
+	NSString* result = [_string substringWithRange:NSMakeRange([self scanLocation], length)];
+	[self setScanLocation: ( [self scanLocation] + length ) ];
+	return result;
+}
+
 
 
 - (NSString*) readRemainder
